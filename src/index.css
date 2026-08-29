@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-outfit: 'Outfit', sans-serif;
+    --font-syne: 'Syne', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8f9fa;
+    color: #09090b;
+  }
+}
+
+.font-outfit {
+  font-family: var(--font-outfit);
+}
+
+.font-syne {
+  font-family: var(--font-syne);
+}
+
+/* Perspective & 3D text reveal helpers */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Spider web grid pattern SVG overlay */
+.bg-spider-grid {
+  background-image: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.08) 1px, transparent 1px),
+                    linear-gradient(to right, rgba(9, 9, 11, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(9, 9, 11, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px, 80px 80px, 80px 80px;
+}
+
+/* Dark mode spider grid */
+.bg-spider-grid-dark {
+  background-image: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.25) 1.5px, transparent 1.5px),
+                    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px, 80px 80px, 80px 80px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c;
+}
