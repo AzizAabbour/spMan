@@ -28,7 +28,7 @@ export default function ContactSection() {
   const cardRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
-  const email = 'hello@srii.tech';
+  const email = 'azizaabbour77@gamilcom';
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -124,9 +124,8 @@ export default function ContactSection() {
           <div className="mt-12 pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-400">
             <div className="flex items-center gap-6">
               {[
-                { label: 'GITHUB', href: 'https://github.com', icon: GithubIcon },
-                { label: 'LINKEDIN', href: 'https://linkedin.com', icon: LinkedinIcon },
-                { label: 'TWITTER', href: 'https://twitter.com', icon: TwitterIcon },
+                { label: 'GITHUB', href: 'https://github.com/AzizAabbour', icon: GithubIcon },
+                { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/aziz-aabbour-1143b1351/', icon: LinkedinIcon },
               ].map((item, idx) => {
                 const Icon = item.icon;
                 return (

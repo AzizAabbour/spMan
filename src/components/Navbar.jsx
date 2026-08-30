@@ -39,9 +39,8 @@ export default function Navbar() {
           className="group flex items-center gap-2 text-xl font-bold font-syne tracking-tight"
         >
           <span className="relative text-zinc-900 group-hover:text-red-600 transition-colors duration-300">
-            SRII<span className="text-red-600">.</span>TECH
+            AZIZ<span className="text-red-600">.</span>AABBOUR
           </span>
-          <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse group-hover:scale-150 transition-transform duration-300" />
         </a>
 
         {/* Desktop Nav Links */}
