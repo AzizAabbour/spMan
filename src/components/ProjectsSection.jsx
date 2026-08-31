@@ -70,21 +70,21 @@ export default function ProjectsSection() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative py-28 md:py-36 px-6 md:px-12 bg-white border-t border-zinc-200 overflow-hidden"
+      className="relative py-28 md:py-36 px-6 md:px-12 bg-white dark:bg-[#0c0c0e] border-t border-zinc-200 dark:border-zinc-800 overflow-hidden transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24">
           <div>
-            <div className="text-xs font-mono font-bold uppercase tracking-widest text-red-600 mb-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-red-600 dark:text-red-500 mb-3">
               // 03. SELECTED WORKS & CASE STUDIES
             </div>
-            <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-zinc-900">
-              FEATURED <span className="text-red-600 italic">PROJECTS</span>
+            <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-zinc-900 dark:text-white">
+              FEATURED <span className="text-red-600 dark:text-red-500 italic">PROJECTS</span>
             </h2>
           </div>
 
-          <p className="mt-4 md:mt-0 text-sm font-mono text-zinc-500 max-w-xs">
+          <p className="mt-4 md:mt-0 text-sm font-mono text-zinc-500 dark:text-zinc-400 max-w-xs">
             Hand-crafted full-stack architectures built with intentional motion and zero compromise.
           </p>
         </div>
@@ -95,13 +95,13 @@ export default function ProjectsSection() {
             <div
               key={project.id}
               ref={(el) => (cardsRef.current[idx] = el)}
-              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-zinc-50 border border-zinc-200 rounded-3xl p-6 md:p-10 hover:border-red-600/50 hover:shadow-2xl hover:shadow-red-600/5 transition-all duration-500"
+              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl p-6 md:p-10 hover:border-red-600/50 hover:shadow-2xl hover:shadow-red-600/5 transition-all duration-500"
             >
               {/* Top Corner Spider Thread Decor on hover */}
               <div className="absolute top-0 right-12 w-[1px] h-8 bg-red-600/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               {/* Project Image Preview */}
-              <div className="lg:col-span-7 overflow-hidden rounded-2xl border border-zinc-200 relative aspect-video bg-zinc-900">
+              <div className="lg:col-span-7 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-700/80 relative aspect-video bg-zinc-900">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -118,15 +118,15 @@ export default function ProjectsSection() {
               {/* Project Info & Description */}
               <div className="lg:col-span-5 flex flex-col justify-between h-full py-2">
                 <div>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-red-600">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-red-600 dark:text-red-500">
                     [{project.category}]
                   </span>
 
-                  <h3 className="font-outfit text-2xl md:text-3xl font-extrabold uppercase text-zinc-900 tracking-tight mt-2 group-hover:text-red-600 transition-colors">
+                  <h3 className="font-outfit text-2xl md:text-3xl font-extrabold uppercase text-zinc-900 dark:text-white tracking-tight mt-2 group-hover:text-red-600 dark:group-hover:text-red-500 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="mt-4 text-zinc-600 font-sans text-sm md:text-base leading-relaxed">
+                  <p className="mt-4 text-zinc-600 dark:text-zinc-300 font-sans text-sm md:text-base leading-relaxed">
                     {project.subtitle}
                   </p>
 
@@ -135,7 +135,7 @@ export default function ProjectsSection() {
                     {project.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="text-[11px] font-mono font-semibold uppercase bg-zinc-200/80 text-zinc-800 px-3 py-1 rounded-md"
+                        className="text-[11px] font-mono font-semibold uppercase bg-zinc-200/80 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 px-3 py-1 rounded-md"
                       >
                         {tag}
                       </span>
@@ -144,12 +144,12 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* External Action Links */}
-                <div className="flex items-center gap-4 mt-8 pt-6 border-t border-zinc-200">
+                <div className="flex items-center gap-4 mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800">
                   <a
                     href={project.live}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase bg-zinc-900 text-white px-5 py-2.5 rounded-full hover:bg-red-600 transition-colors duration-300 shadow-sm"
+                    className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase bg-zinc-900 dark:bg-red-600 text-white px-5 py-2.5 rounded-full hover:bg-red-600 dark:hover:bg-red-500 transition-colors duration-300 shadow-sm"
                   >
                     Live Demo
                     <ArrowUpRight className="w-4 h-4" />
@@ -159,7 +159,7 @@ export default function ProjectsSection() {
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase border border-zinc-300 text-zinc-700 px-4 py-2.5 rounded-full hover:border-zinc-900 hover:text-zinc-900 transition-colors duration-300"
+                    className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-4 py-2.5 rounded-full hover:border-zinc-900 dark:hover:border-white hover:text-zinc-900 dark:hover:text-white transition-colors duration-300"
                   >
                     <GithubIcon />
                     Source

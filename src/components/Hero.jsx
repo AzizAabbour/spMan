@@ -54,50 +54,46 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen pt-32 pb-20 px-6 md:px-12 flex flex-col justify-center overflow-hidden bg-spider-grid"
+      className="relative min-h-screen pt-32 pb-20 px-6 md:px-12 flex flex-col justify-center overflow-hidden bg-spider-grid dark:bg-spider-grid-dark transition-colors duration-300"
     >
-
-
       {/* Main Base Hero Content */}
       <div className="max-w-7xl mx-auto w-full relative z-10">
-
         {/* ── Two-column grid: text left, ParallaxStack right ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
           {/* ─── LEFT: Text content ─── */}
           <div>
             {/* Large Editorial Headline */}
             <div className="overflow-hidden">
               <h1
                 ref={heading1Ref}
-                className="font-outfit text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-[0.88] text-zinc-900"
+                className="font-outfit text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-[0.88] text-zinc-900 dark:text-white"
               >
-                CREATIVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-zinc-900">DEVELOPER</span>
+                CREATIVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-zinc-900 dark:from-red-500 dark:via-red-400 dark:to-white">DEVELOPER</span>
               </h1>
             </div>
 
             <div className="overflow-hidden mt-2">
               <h1
                 ref={heading2Ref}
-                className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter italic uppercase leading-[0.88] text-zinc-900"
+                className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter italic uppercase leading-[0.88] text-zinc-900 dark:text-white"
               >
-                AZIZ ABOUR<span className="underline decoration-red-600 decoration-4 md:decoration-8 underline-offset-8"></span>
+                AZIZ ABOUR<span className="underline decoration-red-600 dark:decoration-red-500 decoration-4 md:decoration-8 underline-offset-8"></span>
               </h1>
             </div>
 
             {/* Description & Metrics */}
             <div ref={descRef} className="mt-8 md:mt-12 space-y-6">
-              <p className="text-lg md:text-xl text-zinc-700 font-sans font-light leading-relaxed max-w-lg">
+              <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300 font-sans font-light leading-relaxed max-w-lg">
                 Crafting bespoke web applications with physical motion systems, smooth GSAP ScrollTrigger choreography, and production-grade full-stack architectures.
               </p>
 
               <div className="flex flex-wrap gap-3 text-xs font-mono">
-                <div className="flex items-center gap-2 text-zinc-600 bg-white/80 backdrop-blur px-3 py-2 rounded-lg border border-zinc-200 shadow-sm">
-                  <Code2 className="w-4 h-4 text-red-600" />
+                <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300 bg-white/80 dark:bg-zinc-900/80 backdrop-blur px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                  <Code2 className="w-4 h-4 text-red-600 dark:text-red-500" />
                   <span>React 19 + GSAP 3</span>
                 </div>
-                <div className="flex items-center gap-2 text-zinc-600 bg-white/80 backdrop-blur px-3 py-2 rounded-lg border border-zinc-200 shadow-sm">
-                  <Globe className="w-4 h-4 text-red-600" />
+                <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300 bg-white/80 dark:bg-zinc-900/80 backdrop-blur px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                  <Globe className="w-4 h-4 text-red-600 dark:text-red-500" />
                   <span>Available for Hire</span>
                 </div>
               </div>
@@ -113,12 +109,12 @@ export default function Hero() {
                   Explore Portfolio
                   <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
                 </span>
-                <span className="absolute inset-0 bg-zinc-900 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+                <span className="absolute inset-0 bg-zinc-900 dark:bg-zinc-950 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
               </a>
 
               <a
                 href="#projects"
-                className="px-8 py-4 rounded-full border border-zinc-900/20 hover:border-zinc-900 text-zinc-900 font-bold text-sm uppercase tracking-wider hover:bg-zinc-900 hover:text-white transition-all duration-300"
+                className="px-8 py-4 rounded-full border border-zinc-900/20 dark:border-white/20 hover:border-zinc-900 dark:hover:border-white text-zinc-900 dark:text-white font-bold text-sm uppercase tracking-wider hover:bg-zinc-900 dark:hover:bg-white hover:text-white dark:hover:text-zinc-900 transition-all duration-300"
               >
                 View Projects
               </a>

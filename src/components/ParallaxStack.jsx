@@ -85,17 +85,17 @@ export default function ParallaxStack() {
     <div className="pstack-outer">
       {/* Floating Header */}
       <div className="flex items-center justify-between w-full max-w-[460px] px-1">
-        <p className="pstack-label flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-red-600" />
+        <p className="pstack-label flex items-center gap-1.5 text-zinc-700 dark:text-zinc-300">
+          <Sparkles className="w-3.5 h-3.5 text-red-600 dark:text-red-500" />
           Interactive Gelatin Reveal
         </p>
-        <span className="text-[10px] font-mono text-zinc-500 bg-zinc-200/80 px-2 py-0.5 rounded border border-zinc-300/50">
+        <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-200/80 dark:bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-300/50 dark:border-zinc-700/50">
           zindex+1 → zindex-1
         </span>
       </div>
 
       {/* Main Container */}
-      <div ref={wrapRef} className="pstack-wrap border border-zinc-200 shadow-xl">
+      <div ref={wrapRef} className="pstack-wrap border border-zinc-200 dark:border-zinc-800 shadow-xl">
         <HalftoneReveal
           src="/zindex+1.jpg"
           revealSrc="/zindex-1.jpg"

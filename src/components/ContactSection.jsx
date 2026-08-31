@@ -67,7 +67,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-28 md:py-36 px-6 md:px-12 bg-[#f8f9fa] border-t border-zinc-200 overflow-hidden"
+      className="relative py-28 md:py-36 px-6 md:px-12 bg-[#f8f9fa] dark:bg-[#09090b] border-t border-zinc-200 dark:border-zinc-800 overflow-hidden transition-colors duration-300"
     >
       <div className="max-w-5xl mx-auto relative z-10">
         

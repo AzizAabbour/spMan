@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --font-outfit: 'Outfit', sans-serif;
@@ -11,6 +13,12 @@
     font-family: var(--font-sans);
     background-color: #f8f9fa;
     color: #09090b;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark body {
+    background-color: #09090b;
+    color: #f4f4f5;
   }
 }
 
