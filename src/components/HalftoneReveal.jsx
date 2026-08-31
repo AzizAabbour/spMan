@@ -43,6 +43,9 @@ uniform vec3 uPaper;
 uniform int uMode;
 uniform float uContrast;
 uniform float uInvert;
+uniform float uEnableHalftone;
+uniform float uEnableDistortion;
+uniform float uGelatin;
 
 uniform float uRevealRadius;
 uniform float uEdge;
@@ -116,15 +119,24 @@ void main() {
   float act = uTrigger == 2 ? 1.0 : (uTrigger == 0 ? 0.0 : uActivity);
   float radius = max(uRevealRadius, 1e-4) * mix(0.4, 1.0, act);
 
+  float radiusGel = radius;
+  if (uGelatin > 0.5) {
+    float a = atan(duv.y, duv.x);
+    float blob = sin(a * 3.0) * 0.16 + cos(a * 5.0) * 0.10 + sin(a * 2.0 + uMouse.x * 6.0) * 0.12;
+    radiusGel = radius * (1.0 + blob * 0.38);
+  }
+
   float px = 1.4 / max(iResolution.y, 1.0);
-  float band = max(px, radius * (1.0 - clamp(uEdge, 0.0, 1.0)) * 0.45);
-  float loupe = 1.0 - smoothstep(radius - band, radius + band, dist);
+  float band = max(px, radiusGel * (1.0 - clamp(uEdge, 0.0, 1.0)) * 0.45);
+  float loupe = 1.0 - smoothstep(radiusGel - band, radiusGel + band, dist);
   float focus = clamp(max(loupe * act, uIdleReveal), 0.0, 1.0);
 
   float dens = uDensity;
 
   vec3 print;
-  if (uMode == 2) {
+  if (uEnableHalftone < 0.5) {
+    print = gradeRGB(texture(tMap, clamp(coverUv(vUv), 0.0, 1.0)).rgb);
+  } else if (uMode == 2) {
     vec3 gc = gradeRGB(sampleCell(st, dens, ang + radians(15.0)).rgb);
     vec3 gm = gradeRGB(sampleCell(st, dens, ang + radians(75.0)).rgb);
     vec3 gy = gradeRGB(sampleCell(st, dens, ang).rgb);
@@ -162,16 +174,21 @@ void main() {
     print = mix(uPaper, uInk, cov);
   }
 
-  float t = clamp(dist / radius, 0.0, 1.0);
-  float bend = t * t * t * t;
-  vec2 dir = dist > 1e-5 ? duv / dist : vec2(0.0);
-  vec2 off = dir * bend * radius * 0.22 / aspect;
-  vec2 ca = dir * bend * 0.0045 / aspect;
-  vec3 sharp = gradeRGB(vec3(
-    texture(tMapReveal, clamp(coverRevealUv(vUv - off - ca), 0.0, 1.0)).r,
-    texture(tMapReveal, clamp(coverRevealUv(vUv - off), 0.0, 1.0)).g,
-    texture(tMapReveal, clamp(coverRevealUv(vUv - off + ca), 0.0, 1.0)).b
-  ));
+  vec3 sharp;
+  if (uEnableDistortion > 0.5) {
+    float t = clamp(dist / radiusGel, 0.0, 1.0);
+    float bend = t * t * t * t;
+    vec2 dir = dist > 1e-5 ? duv / dist : vec2(0.0);
+    vec2 off = dir * bend * radiusGel * 0.22 / aspect;
+    vec2 ca = dir * bend * 0.0045 / aspect;
+    sharp = gradeRGB(vec3(
+      texture(tMapReveal, clamp(coverRevealUv(vUv - off - ca), 0.0, 1.0)).r,
+      texture(tMapReveal, clamp(coverRevealUv(vUv - off), 0.0, 1.0)).g,
+      texture(tMapReveal, clamp(coverRevealUv(vUv - off + ca), 0.0, 1.0)).b
+    ));
+  } else {
+    sharp = gradeRGB(texture(tMapReveal, clamp(coverRevealUv(vUv), 0.0, 1.0)).rgb);
+  }
 
   vec3 col = mix(print, sharp, focus);
   fragColor = vec4(col, 1.0);
@@ -188,11 +205,14 @@ const HalftoneReveal = ({
   dotDensity = 71,
   angle = 45,
   shape = 'circle',
-  contrast = 1.15,
+  contrast = 1.0,
   invert = false,
-  revealRadius = 0.4,
+  enableHalftone = true,
+  enableDistortion = false,
+  enableGelatin = true,
+  revealRadius = 0.15,
   edge = 0.8,
-  follow = 0.37,
+  follow = 0.07,
   idleReveal = 0,
   trigger = 'hover',
   borderRadius = '16px',
@@ -252,6 +272,9 @@ const HalftoneReveal = ({
       uMode: { value: MODES[mode] ?? 0 },
       uContrast: { value: contrast },
       uInvert: { value: invert ? 1 : 0 },
+      uEnableHalftone: { value: enableHalftone ? 1 : 0 },
+      uEnableDistortion: { value: enableDistortion ? 1 : 0 },
+      uGelatin: { value: enableGelatin ? 1 : 0 },
       uRevealRadius: { value: revealRadius },
       uEdge: { value: edge },
       uIdleReveal: { value: idleReveal },
@@ -294,17 +317,29 @@ const HalftoneReveal = ({
     const ro = new ResizeObserver(resize);
     ro.observe(container);
 
+    let rect = container.getBoundingClientRect();
+    const updateRect = () => {
+      if (container) rect = container.getBoundingClientRect();
+    };
+
     const onMove = e => {
-      const rect = container.getBoundingClientRect();
-      mouseRef.current.x = (e.clientX - rect.left) / rect.width;
-      mouseRef.current.y = 1 - (e.clientY - rect.top) / rect.height;
+      if (!rect || rect.width === 0) updateRect();
+      mouseRef.current.x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      mouseRef.current.y = Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height));
       mouseRef.current.target = reduced ? 0 : 1;
+    };
+    const onEnter = e => {
+      updateRect();
+      onMove(e);
     };
     const onLeave = () => {
       mouseRef.current.target = 0;
     };
+
+    window.addEventListener('scroll', updateRect, { passive: true });
+    window.addEventListener('resize', updateRect, { passive: true });
     container.addEventListener('pointermove', onMove, { passive: true });
-    container.addEventListener('pointerenter', onMove, { passive: true });
+    container.addEventListener('pointerenter', onEnter, { passive: true });
     container.addEventListener('pointerleave', onLeave, { passive: true });
 
     let prev = performance.now();
@@ -314,10 +349,11 @@ const HalftoneReveal = ({
       prev = now;
 
       const m = mouseRef.current;
-      const a = 1 - Math.exp(-dt / Math.max(0.001, followRef.current));
+      const followSpeed = Math.max(0.001, followRef.current);
+      const a = 1 - Math.exp(-dt / followSpeed);
       m.sx += (m.x - m.sx) * a;
       m.sy += (m.y - m.sy) * a;
-      const ba = 1 - Math.exp(-dt / 0.18);
+      const ba = 1 - Math.exp(-dt / 0.08);
       m.active += (m.target - m.active) * ba;
 
       uniforms.uMouse.value[0] = m.sx;
@@ -331,8 +367,10 @@ const HalftoneReveal = ({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       ro.disconnect();
+      window.removeEventListener('scroll', updateRect);
+      window.removeEventListener('resize', updateRect);
       container.removeEventListener('pointermove', onMove);
-      container.removeEventListener('pointerenter', onMove);
+      container.removeEventListener('pointerenter', onEnter);
       container.removeEventListener('pointerleave', onLeave);
       const ext = gl.getExtension('WEBGL_lose_context');
       if (ext) ext.loseContext();
@@ -355,6 +393,9 @@ const HalftoneReveal = ({
     u.uMode.value = MODES[mode] ?? 0;
     u.uContrast.value = contrast;
     u.uInvert.value = invert ? 1 : 0;
+    u.uEnableHalftone.value = enableHalftone ? 1 : 0;
+    u.uEnableDistortion.value = enableDistortion ? 1 : 0;
+    u.uGelatin.value = enableGelatin ? 1 : 0;
     u.uRevealRadius.value = revealRadius;
     u.uEdge.value = edge;
     u.uIdleReveal.value = idleReveal;
@@ -369,6 +410,9 @@ const HalftoneReveal = ({
     mode,
     contrast,
     invert,
+    enableHalftone,
+    enableDistortion,
+    enableGelatin,
     revealRadius,
     edge,
     idleReveal,

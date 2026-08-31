@@ -81,7 +81,7 @@ export default function Hero() {
                 ref={heading2Ref}
                 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter italic uppercase leading-[0.88] text-zinc-900"
               >
-                & MOTION <span className="underline decoration-red-600 decoration-4 md:decoration-8 underline-offset-8">ARCHITECT</span>
+                AZIZ ABOUR<span className="underline decoration-red-600 decoration-4 md:decoration-8 underline-offset-8"></span>
               </h1>
             </div>
 
